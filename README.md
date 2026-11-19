@@ -10,7 +10,7 @@ in aplicatie. Date fictive.
 ## Cum testezi in 3 pasi (cazul demo)
 
 1. Deschide https://clarnuomandarina.github.io/salvabox-challenge-test/ si pune
-   **pret maxim `15`** RON cu dieta **Vegetarian**, apoi apasa **Filtreaza**.
+   **pret maxim `15`** RON cu dieta **Vegetarian**, apoi apasa **Cauta cutii**.
 2. Apar **3 cutii** sortate crescator dupa pret: *Paste cu sos de rosii* 10 RON,
    *Tocanita de legume cu orez* 12 RON, *Curry de naut vegan* 14 RON.
 3. Apasa **Rezerva** la prima cutie: primesti un cod de ridicare `SB-####` si

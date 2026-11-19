@@ -42,6 +42,8 @@
   de `docs/app.js`, cea mai ieftina cutie disponibila e 10 RON. **Fix:** "de la
   10 lei" pe afis, plus un test care citeste minimul din app si cade la
   nepotrivire.
+- **Buton gresit (review).** README/pitch ziceau "Filtreaza"; real e "Cauta
+  cutii". **Fix:** corectat; test pe `#searchBtn`.
 
 ## Resurse din afara
 - `github-multi-agent-skill.txt v1.2` - schelet de coordonare multi-agent

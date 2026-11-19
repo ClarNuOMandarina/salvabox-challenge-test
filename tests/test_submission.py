@@ -26,6 +26,8 @@ JOURNAL = os.path.join(ROOT, "business", "ai_journal.md")
 PITCH = os.path.join(ROOT, "business", "pitch.html")
 README = os.path.join(ROOT, "README.md")
 STRATEGY = os.path.join(ROOT, "business", "strategy.md")
+# Read-only: the submission steps must name the REAL app button (skill 7.8).
+DOCS_INDEX = os.path.join(ROOT, "docs", "index.html")
 
 LIVE_URL = "https://clarnuomandarina.github.io/salvabox-challenge-test/"
 VERIFICATION_COMMAND = "python -m unittest discover -s tests -v"
@@ -281,6 +283,46 @@ class ReadmeTest(unittest.TestCase):
         self.assertTrue(
             ("date false" in raw) or ("date fictive" in raw),
             "README must carry a fake-data note",
+        )
+
+
+class ButtonLabelConsistencyTest(unittest.TestCase):
+    """MAJOR fix (round 1): the submission steps must name the REAL app button.
+
+    Reads the #searchBtn label straight from docs/index.html (read-only) and
+    asserts both the README and the pitch tell the jury to press that exact
+    text. Guards against the field-tested 'Filtreaza' vs 'Cauta cutii' bug
+    (skill 7.8): a wrong button label makes a judge think the app is broken.
+    """
+
+    def _search_button_label(self):
+        raw = _read(DOCS_INDEX)
+        m = re.search(
+            r'<button[^>]*\bid="searchBtn"[^>]*>(.*?)</button>', raw, re.S | re.I
+        )
+        self.assertIsNotNone(
+            m, "docs/index.html must have a <button id=\"searchBtn\">"
+        )
+        label = re.sub(r"\s+", " ", m.group(1)).strip()
+        self.assertTrue(label, "the #searchBtn button must have visible text")
+        return label
+
+    def test_readme_uses_real_button_label(self):
+        label = self._search_button_label()
+        self.assertIn(
+            label,
+            _read(README),
+            f"README must tell the jury to press the real button '{label}', "
+            "not a label that does not exist in docs/index.html",
+        )
+
+    def test_pitch_uses_real_button_label(self):
+        label = self._search_button_label()
+        self.assertIn(
+            label,
+            _read(PITCH),
+            f"pitch must tell the jury to press the real button '{label}', "
+            "not a label that does not exist in docs/index.html",
         )
 
 
