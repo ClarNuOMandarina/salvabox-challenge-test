@@ -1,3 +1,45 @@
 <!doctype html>
-<html lang="ro"><head><meta charset="utf-8"><title>SalvaBox</title></head>
-<body><p>SalvaBox: aplicatia vine in curand.</p></body></html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SalvaBox</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1 class="app-title">SalvaBox</h1>
+    <p class="tagline">Salveaza o cutie cu mancare din cantina si plateste mai putin.</p>
+  </header>
+
+  <main class="app-main">
+    <form id="filterForm" class="filters" autocomplete="off">
+      <div class="field">
+        <label for="maxPrice">Pret maxim (RON)</label>
+        <input type="number" id="maxPrice" name="maxPrice" min="0" step="1" value="20" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label for="diet">Dieta</label>
+        <select id="diet" name="diet">
+          <option value="oricare">Oricare</option>
+          <option value="vegetarian">Vegetarian</option>
+          <option value="vegan">Vegan</option>
+        </select>
+      </div>
+      <button type="submit" id="searchBtn" class="btn">Cauta cutii</button>
+    </form>
+
+    <section id="reservation" class="reservation" hidden></section>
+
+    <p id="emptyState" class="empty-state" hidden>Nicio cutie pentru filtrul ales. Mareste pretul sau schimba dieta.</p>
+
+    <ul id="results" class="results" aria-live="polite"></ul>
+  </main>
+
+  <footer class="app-footer">
+    <p>Date demonstrative (fake). Proiect de contest SalvaBox.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
