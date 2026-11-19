@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SalvaBox - Pitch (5 slides)</title>
+<style>
+  :root {
+    --green: #1e7d4f;
+    --green-dark: #0f2e1d;
+    --green-mid: #17a35a;
+    --green-soft: #eafaf0;
+    --ink: #10251a;
+    --muted: #3f6b53;
+  }
+  @page { size: 1280px 720px; margin: 0 }
+  * { margin: 0; padding: 0; box-sizing: border-box }
+  html, body {
+    background: #c9d6cf;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .deck { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 24px 0 }
+  .slide {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 80% at 100% 0%, var(--green-soft) 0%, #ffffff 46%),
+      linear-gradient(180deg, #ffffff 0%, #f3fbf6 100%);
+    padding: 70px 90px;
+    display: flex;
+    flex-direction: column;
+    break-after: page;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .slide:last-child { break-after: auto }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 22px; font-weight: 800; letter-spacing: -0.3px; color: var(--green-dark);
+  }
+  .brand .mark { width: 40px; height: 40px; flex: 0 0 auto }
+  .brand .accent { color: var(--green-mid) }
+  .slide-no {
+    position: absolute; top: 46px; right: 90px;
+    font-size: 15px; font-weight: 700; color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .kicker {
+    margin-top: 48px;
+    font-size: 17px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--green);
+  }
+  h1 {
+    margin-top: 12px;
+    font-size: 58px; font-weight: 800; line-height: 1.05;
+    letter-spacing: -1px; color: var(--green-dark); max-width: 1000px;
+  }
+  h1 .hl { color: var(--green-mid) }
+  .lead { margin-top: 20px; font-size: 25px; line-height: 1.4; color: var(--muted); max-width: 940px }
+  ul { margin-top: 26px; list-style: none }
+  li {
+    position: relative; padding-left: 34px; margin-bottom: 16px;
+    font-size: 23px; line-height: 1.35; color: var(--ink); max-width: 1000px;
+  }
+  li::before {
+    content: ""; position: absolute; left: 0; top: 9px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--green-mid);
+  }
+  li strong { color: var(--green-dark) }
+  .cols { display: flex; gap: 40px; margin-top: 30px; flex: 1 1 auto }
+  .col { flex: 1 1 0 }
+  .col h2 { font-size: 22px; color: var(--green); margin-bottom: 14px; letter-spacing: .3px }
+
+  .stat-row { display: flex; gap: 26px; margin-top: 34px; flex-wrap: wrap }
+  .stat {
+    background: #ffffff; border: 2px solid var(--green-soft);
+    border-radius: 18px; padding: 22px 26px; min-width: 210px;
+    box-shadow: 0 8px 22px rgba(23,163,90,.10);
+  }
+  .stat .n { font-size: 40px; font-weight: 800; color: var(--green-mid); line-height: 1 }
+  .stat .l { margin-top: 8px; font-size: 16px; color: var(--muted); font-weight: 600 }
+  .result {
+    margin-top: 30px; align-self: flex-start;
+    background: linear-gradient(180deg, #1fbf69 0%, #149a52 100%);
+    color: #fff; border-radius: 16px; padding: 20px 30px;
+    font-size: 26px; font-weight: 800;
+    box-shadow: 0 10px 26px rgba(20,154,82,.35);
+  }
+  .note { margin-top: auto; font-size: 15px; color: var(--muted) }
+
+  .demo-slide { background: linear-gradient(135deg, var(--green-dark) 0%, #123a26 100%); color: #eafaf0 }
+  .demo-slide .kicker { color: #6fe3a0 }
+  .demo-slide h1 { color: #ffffff }
+  .demo-slide h1 .hl { color: #6fe3a0 }
+  .demo-slide .lead { color: #bfe8cf }
+  .demo-slide li { color: #eafaf0 }
+  .demo-slide li strong { color: #ffffff }
+  .demo-slide li::before { background: #6fe3a0 }
+  .url-box {
+    margin-top: 24px; align-self: flex-start;
+    background: rgba(255,255,255,.08);
+    border: 2px solid #2f6b4c; border-radius: 14px;
+    padding: 18px 26px; font-size: 24px; font-weight: 700; color: #6fe3a0;
+    word-break: break-all;
+  }
+  ol { margin-top: 24px; padding-left: 0; list-style: none; counter-reset: step }
+  ol li {
+    position: relative; padding-left: 52px; margin-bottom: 16px;
+    font-size: 23px; line-height: 1.35; counter-increment: step;
+  }
+  ol li::before {
+    content: counter(step); position: absolute; left: 0; top: 0;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #6fe3a0; color: var(--green-dark);
+    font-size: 18px; font-weight: 800; text-align: center; line-height: 34px;
+  }
+
+  /* Print: one .slide == exactly one 1280x720 page, no wrapper spacing. */
+  @media print {
+    html, body { background: #ffffff }
+    .deck { display: block; gap: 0; padding: 0 }
+    .slide {
+      margin: 0;
+      width: 1280px;
+      height: 720px;
+      page-break-after: always;
+      break-after: page;
+    }
+    .slide:last-child { page-break-after: auto; break-after: auto }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- Slide 1: Problema -->
+  <section class="slide">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 100 100" role="img" aria-label="Sigla SalvaBox">
+        <rect x="14" y="46" width="72" height="42" rx="6" fill="#17a35a"/>
+        <rect x="14" y="46" width="72" height="12" rx="6" fill="#0f8c4a"/>
+        <path d="M50 58 C50 40 62 28 80 24 C78 42 68 56 50 58 Z" fill="#8fe6b2"/>
+        <path d="M50 58 C50 44 44 34 32 30 C33 44 40 54 50 58 Z" fill="#b6f2cf"/>
+      </svg>
+      Salva<span class="accent">Box</span>
+    </div>
+    <span class="slide-no">01 / 05</span>
+    <p class="kicker">Problema</p>
+    <h1>Mancare buna aruncata seara, <span class="hl">studenti fara masa ieftina</span>.</h1>
+    <p class="lead">In fiecare seara cantinele si cafenelele din campus arunca mancarea ramasa nevanduta, iar studentii cu buget mic nu stiu unde gasesc o masa calda ieftina.</p>
+    <ul>
+      <li><strong>Partenerii</strong> pierd bani si inregistreaza risipa.</li>
+      <li><strong>Studentii</strong> platesc pret intreg la restaurant.</li>
+      <li>Nu exista azi un canal simplu prin care surplusul de seara sa ajunga rapid la cine are nevoie, filtrat dupa buget si dieta.</li>
+    </ul>
+    <p class="note">Date fictive, demo de contest.</p>
+  </section>
+
+  <!-- Slide 2: Solutia + demo -->
+  <section class="slide">
+    <span class="slide-no">02 / 05</span>
+    <p class="kicker">Solutia + demo</p>
+    <h1>Rezervi o cutie de surplus in <span class="hl">3 pasi</span>.</h1>
+    <p class="lead">O aplicatie web statica: filtrezi cutiile din seara curenta dupa buget si dieta, rezervi una si primesti un cod de ridicare. Fara cont, fara plata in app.</p>
+    <ul>
+      <li><strong>Filtrezi</strong> dupa pret maxim si dieta (oricare / vegetarian / vegan).</li>
+      <li><strong>Vezi</strong> felul, cantina, pretul, ora de ridicare si cate cutii au ramas.</li>
+      <li><strong>Rezervi</strong> si primesti un cod <strong>SB-####</strong>; platesti la tejghea cand ridici.</li>
+    </ul>
+    <p class="note">Cel mai ieftin fel disponibil azi: 10 RON. Interval de pret: 10-18 RON.</p>
+  </section>
+
+  <!-- Slide 3: Bani -->
+  <section class="slide">
+    <span class="slide-no">03 / 05</span>
+    <p class="kicker">Modelul de bani (luna 6, dupa extindere)</p>
+    <h1>Comision 25% + abonament, <span class="hl">rezultat pozitiv</span>.</h1>
+    <p class="lead">SalvaBox factureaza lunar partenerului 25% pe cutie plus un abonament; studentul plateste la tejghea, cafeneaua incaseaza. Pret mediu 15 RON/cutie.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="n">4000</div><div class="l">cutii / luna (20 cafenele)</div></div>
+      <div class="stat"><div class="n">18000</div><div class="l">venituri RON / luna</div></div>
+      <div class="stat"><div class="n">6700</div><div class="l">costuri RON / luna</div></div>
+    </div>
+    <div class="result">Rezultat inainte de impozit: 11300 RON / luna</div>
+    <p class="note">Numere din business/financial_model.xlsx (formule), identice cu strategia.</p>
+  </section>
+
+  <!-- Slide 4: Go-to-market + next steps -->
+  <section class="slide">
+    <span class="slide-no">04 / 05</span>
+    <p class="kicker">Go-to-market + pasii urmatori</p>
+    <h1>Crestere <span class="hl">ieftina si locala</span> in campus.</h1>
+    <div class="cols">
+      <div class="col">
+        <h2>Cum aducem clienti</h2>
+        <ul>
+          <li>Ambasadori studenti platiti in camine si la seminarii.</li>
+          <li>Afise cu cod QR la intrarea in cantine si pe grupurile de an.</li>
+          <li>Parteneriat direct: cafenelele isi trimit clientii spre aplicatie.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h2>3 pasi urmatori</h2>
+        <ul>
+          <li>Semnam 5 cafenele pilot si incarcam ofertele 2 saptamani.</li>
+          <li>Recrutam 6 ambasadori si lipim afise cu QR in cantine.</li>
+          <li>Masuram cutiile vandute si rata de ridicare, apoi extindem.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Ordinea de prioritate: aplicatie, apoi strategie, apoi promovare.</p>
+  </section>
+
+  <!-- Slide 5: Live URL + cum testezi -->
+  <section class="slide demo-slide">
+    <span class="slide-no">05 / 05</span>
+    <p class="kicker">Incearca live</p>
+    <h1>Testeaza aplicatia in <span class="hl">3 pasi</span>.</h1>
+    <div class="url-box">https://clarnuomandarina.github.io/salvabox-challenge-test/</div>
+    <p class="lead">Cum testezi (cazul demo):</p>
+    <ol>
+      <li>Pune <strong>pret maxim 15</strong> RON si dieta <strong>Vegetarian</strong>, apoi apasa Filtreaza.</li>
+      <li>Vezi <strong>3 cutii</strong> sortate crescator: Paste cu sos de rosii 10, Tocanita de legume 12, Curry de naut 14 RON.</li>
+      <li>Apasa <strong>Rezerva</strong> la prima cutie: primesti un cod <strong>SB-####</strong> si cutiile ramase scad cu 1.</li>
+    </ol>
+  </section>
+
+</div>
+</body>
+</html>
