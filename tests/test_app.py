@@ -205,6 +205,20 @@ class TestMobilePolish(unittest.TestCase):
             "no @media (max-width) rule sets form fields to width: 100%",
         )
 
+    def test_media_query_sets_field_flex_none(self):
+        # Review round 1: on phones .filters becomes flex-direction: column, so
+        # the base `.field { flex: 1 1 140px }` would turn 140px into the field
+        # HEIGHT and leave ~100px empty gaps. The mobile media block must reset
+        # .field to `flex: 0 0 auto` so fields size to their content.
+        blocks = re.findall(r"@media\s*\(max-width[^{]*\{(.*?)\n\}", self.css, re.DOTALL)
+        self.assertTrue(blocks, "no @media (max-width ...) rule found in style.css")
+        joined = "\n".join(blocks)
+        self.assertRegex(
+            joined,
+            r"\.field[^{}]*\{[^{}]*flex:\s*0\s+0\s+auto",
+            "mobile @media rule must set .field to flex: 0 0 auto",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
