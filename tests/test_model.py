@@ -181,5 +181,51 @@ class StrategyTest(unittest.TestCase):
                       "strategy must quote the commission percentage")
 
 
+class QaPrepTest(unittest.TestCase):
+    """Issue #11: Q&A prep file + 13 RON recomputation quoted in strategy."""
+
+    QA = os.path.join(ROOT, "business", "qa_prep.md")
+
+    @classmethod
+    def setUpClass(cls):
+        with open(cls.QA, encoding="utf-8") as fh:
+            cls.qa = fh.read()
+        with open(STRATEGY, encoding="utf-8") as fh:
+            cls.strategy = fh.read()
+        spec = importlib.util.spec_from_file_location("build_model_qa", BUILDER)
+        cls.builder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.builder)
+
+    def test_qa_prep_exists_nonempty(self):
+        self.assertTrue(os.path.isfile(self.QA), "business/qa_prep.md missing")
+        self.assertGreater(len(self.qa.strip()), 0, "qa_prep.md is empty")
+
+    def test_qa_prep_word_limit(self):
+        words = re.findall(r"\S+", self.qa)
+        self.assertLessEqual(
+            len(words), 350, f"qa_prep.md has {len(words)} words (max 350)")
+
+    def test_qa_prep_has_five_numbered_questions(self):
+        questions = re.findall(r"(?m)^\s*\d+\.\s+\S", self.qa)
+        self.assertEqual(
+            len(questions), 5,
+            f"qa_prep.md must have exactly 5 numbered questions, got {len(questions)}")
+
+    def test_13_ron_result_recomputed_and_quoted(self):
+        # Recompute the monthly result from the model formulas with B4 = 13:
+        # commission = price*0.25*boxes, plus subscriptions, minus costs.
+        a = self.builder.ASSUMPTIONS
+        price_13 = 13.0
+        revenue = price_13 * a["B5"] * a["B6"] + a["B7"] * a["B8"]
+        costs = a["B12"] + a["B13"] + a["B9"] + a["B10"] * a["B11"]
+        expected = int(round(revenue - costs))
+        self.assertEqual(expected, 9300, "13 RON case must recompute to 9300")
+        digits = {int(m.replace(".", "").replace(",", ""))
+                  for m in re.findall(r"\d[\d.,]*", self.strategy)}
+        self.assertIn(
+            expected, digits,
+            f"strategy.md must quote the 13 RON recomputed result {expected} RON/luna")
+
+
 if __name__ == "__main__":
     unittest.main()
