@@ -31,13 +31,17 @@ import zipfile
 # --------------------------------------------------------------------------
 
 # Assumptions (typed numbers). Keyed by cell ref in column B.
+# Money flow: studentul plateste la tejghea, cafeneaua incaseaza banii;
+# SalvaBox NU proceseaza plati, deci nu exista taxa de procesare pe GMV.
+# SalvaBox factureaza lunar comisionul de 25%, deci costul real este
+# contabilitate + facturare, nu procesare de plati.
 ASSUMPTIONS = {
     "B4": 15,     # Pret pe cutie (RON/cutie)
     "B5": 0.25,   # Comision partener (fractie)
-    "B6": 4000,   # Cutii vandute pe luna (cutii/luna)
+    "B6": 4000,   # Cutii vandute pe luna (cutii/luna) - luna 6, dupa extindere
     "B7": 20,     # Cafenele abonate (nr)
     "B8": 150,    # Abonament cafenea (RON/luna)
-    "B9": 0.03,   # Taxa procesare plati (fractie din GMV)
+    "B9": 800,    # Contabilitate + facturare (RON/luna)
     "B10": 6,     # Ambasadori studenti (nr)
     "B11": 500,   # Plata pe ambasador (RON/luna)
     "B12": 400,   # Hosting (RON/luna)
@@ -46,22 +50,22 @@ ASSUMPTIONS = {
 
 # Rows in display order: (ref_or_None, label, kind, formula_or_None)
 ROWS = [
-    (None, "Model financiar SalvaBox (RON/luna) - date fictive", "head", None),
+    (None, "Model financiar SalvaBox (RON/luna) - luna 6, dupa extindere - date fictive", "head", None),
     (None, "", "head", None),
     (None, "Ipoteze", "head", None),
     ("B4", "Pret pe cutie (RON/cutie)", "num", None),
     ("B5", "Comision partener (fractie)", "num", None),
-    ("B6", "Cutii vandute pe luna (cutii/luna)", "num", None),
-    ("B7", "Cafenele abonate (nr)", "num", None),
+    ("B6", "Cutii vandute pe luna, luna 6 (cutii/luna)", "num", None),
+    ("B7", "Cafenele abonate, luna 6 (nr)", "num", None),
     ("B8", "Abonament cafenea (RON/luna)", "num", None),
-    ("B9", "Taxa procesare plati (fractie din GMV)", "num", None),
+    ("B9", "Contabilitate + facturare (RON/luna)", "num", None),
     ("B10", "Ambasadori studenti (nr)", "num", None),
     ("B11", "Plata pe ambasador (RON/luna)", "num", None),
     ("B12", "Hosting (RON/luna)", "num", None),
     ("B13", "Marketing (RON/luna)", "num", None),
     (None, "", "head", None),
     (None, "Venituri", "head", None),
-    ("B16", "GMV cutii (RON/luna)", "formula", "B4*B6"),
+    ("B16", "GMV cutii, incasat de cafenea (RON/luna)", "formula", "B4*B6"),
     ("B17", "Venit din comision (RON/luna)", "formula", "B4*B5*B6"),
     ("B18", "Venit din abonamente (RON/luna)", "formula", "B7*B8"),
     ("B19", "Venituri totale (RON/luna)", "formula", "SUM(B17:B18)"),
@@ -69,12 +73,12 @@ ROWS = [
     (None, "Costuri", "head", None),
     ("B22", "Hosting (RON/luna)", "formula", "B12"),
     ("B23", "Marketing (RON/luna)", "formula", "B13"),
-    ("B24", "Taxe procesare plati (RON/luna)", "formula", "B16*B9"),
+    ("B24", "Contabilitate + facturare (RON/luna)", "formula", "B9"),
     ("B25", "Ambasadori studenti (RON/luna)", "formula", "B10*B11"),
     ("B26", "Costuri totale (RON/luna)", "formula", "SUM(B22:B25)"),
     (None, "", "head", None),
     (None, "Rezultat", "head", None),
-    ("B29", "Rezultat lunar (profit) (RON/luna)", "formula", "B19-B26"),
+    ("B29", "Rezultat lunar inainte de impozit (RON/luna)", "formula", "B19-B26"),
 ]
 
 FORMULAS = {ref: f for (ref, _lbl, kind, f) in ROWS if kind == "formula"}

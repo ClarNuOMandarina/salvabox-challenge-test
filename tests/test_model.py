@@ -111,10 +111,11 @@ class ModelXlsxTest(unittest.TestCase):
     def test_result_matches_independent_python(self):
         values = self.builder.compute_values()
         # Independent recomputation of the result from the assumptions.
+        # Money flow: cafeneaua incaseaza GMV; SalvaBox NU proceseaza plati,
+        # deci nu exista taxa pe GMV. B9 este contabilitate + facturare (cost fix).
         a = self.builder.ASSUMPTIONS
-        gmv = a["B4"] * a["B6"]
         revenue = a["B4"] * a["B5"] * a["B6"] + a["B7"] * a["B8"]
-        costs = a["B12"] + a["B13"] + gmv * a["B9"] + a["B10"] * a["B11"]
+        costs = a["B12"] + a["B13"] + a["B9"] + a["B10"] * a["B11"]
         expected = revenue - costs
         self.assertAlmostEqual(values["B29"], expected, places=6)
 
