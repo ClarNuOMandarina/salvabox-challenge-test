@@ -226,6 +226,40 @@ class QaPrepTest(unittest.TestCase):
             expected, digits,
             f"strategy.md must quote the 13 RON recomputed result {expected} RON/luna")
 
+    def test_qa_prep_quotes_month1_loss(self):
+        # Review round 1 (MAJOR): Q2 must be honest about the months 1-5 ramp.
+        # Recompute month 1 from the model's own assumptions:
+        #   5 cafes, ~9 boxes/cafe/day * 22 days = 990 boxes, price 15, 25% commission,
+        #   plus 5 subscriptions; against the model's fixed monthly costs.
+        a = self.builder.ASSUMPTIONS
+        boxes_m1 = 9 * 5 * 22                      # 990 boxes
+        rev_m1 = boxes_m1 * a["B4"] * a["B5"] + 5 * a["B8"]
+        costs = a["B12"] + a["B13"] + a["B9"] + a["B10"] * a["B11"]
+        result_m1 = rev_m1 - costs                 # -2237.5
+        self.assertAlmostEqual(result_m1, -2237.5, places=6)
+        # qa_prep.md must quote the month-1 result (the digits 2237.5 -> "2237,5").
+        qa_digits = {m.replace(".", "").replace(",", "")
+                     for m in re.findall(r"\d[\d.,]*", self.qa)}
+        self.assertIn(
+            "22375", qa_digits,
+            "qa_prep.md must quote the month-1 result (~-2237,5 RON)")
+
+    def test_qa_prep_quotes_break_even(self):
+        # Review round 1 (MAJOR): Q2 must state the break-even volume with its
+        # arithmetic: (fixed costs - subscriptions) / (price * commission),
+        # with 20 cafes subscribed.
+        a = self.builder.ASSUMPTIONS
+        costs = a["B12"] + a["B13"] + a["B9"] + a["B10"] * a["B11"]
+        subscriptions = a["B7"] * a["B8"]          # 20 * 150 = 3000
+        break_even = (costs - subscriptions) / (a["B4"] * a["B5"])
+        self.assertAlmostEqual(break_even, 986.6666666666666, places=6)
+        self.assertEqual(round(break_even), 987)
+        qa_digits = {m.replace(".", "").replace(",", "")
+                     for m in re.findall(r"\d[\d.,]*", self.qa)}
+        self.assertIn(
+            "987", qa_digits,
+            "qa_prep.md must quote the break-even volume (~987 cutii/luna)")
+
 
 if __name__ == "__main__":
     unittest.main()
