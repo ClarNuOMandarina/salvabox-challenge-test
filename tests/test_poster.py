@@ -13,6 +13,7 @@ from html.parser import HTMLParser
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 POSTER = os.path.join(HERE, "..", "business", "poster.html")
+APP_JS = os.path.join(HERE, "..", "docs", "app.js")
 LIVE_URL = "https://clarnuomandarina.github.io/salvabox-challenge-test/"
 
 
@@ -180,6 +181,41 @@ class AcceptanceCriterion3Test(unittest.TestCase):
             raw,
             r"url\(\s*['\"]?https?://",
             "no external url() references in CSS",
+        )
+
+
+class PriceMatchesAppTest(unittest.TestCase):
+    """The poster's 'de la N lei' price must match the cheapest AVAILABLE box
+    in the merged app (docs/app.js). Read-only use of a file outside the
+    Issue's Allowed Files is allowed per the Coordinator's [COORD:REVIEW]."""
+
+    def _min_available_price(self):
+        with open(APP_JS, "r", encoding="utf-8") as fh:
+            src = fh.read()
+        m = re.search(r"/\*BOXES_START\*/(.*?)/\*BOXES_END\*/", src, re.S)
+        self.assertIsNotNone(
+            m, "could not find /*BOXES_START*/.../*BOXES_END*/ in docs/app.js"
+        )
+        import json
+
+        boxes = json.loads(m.group(1))
+        available = [b["price"] for b in boxes if b.get("left", 0) > 0]
+        self.assertTrue(available, "docs/app.js has no available boxes (left > 0)")
+        return min(available)
+
+    def test_price_matches_min_available_box(self):
+        raw, _ = _load()
+        m = re.search(r"de la\s+(\d+)\s+lei", raw, re.I)
+        self.assertIsNotNone(
+            m, "poster must state a 'de la N lei' price"
+        )
+        poster_price = int(m.group(1))
+        expected = self._min_available_price()
+        self.assertEqual(
+            poster_price,
+            expected,
+            "poster 'de la N lei' (%d) must equal the cheapest available box "
+            "in docs/app.js (%d)" % (poster_price, expected),
         )
 
 
