@@ -1,0 +1,45 @@
+================================================================================
+OPERATION BASIS - salvabox (Business Challenge mode, skill Section 7)
+Mock contest theme (announced at 0:00): "AI pentru un campus mai verde"
+All data in this project is FAKE.
+================================================================================
+
+[SECTION 1: MANDATORY FIELDS - ALL 8 REQUIRED]
+
+PROJECT_NAME: salvabox
+
+REPO_URL: NEW:ClarNuOMandarina/salvabox-challenge-test
+
+PROJECT_GOAL: Campus cafeterias throw away cooked food every evening while students look for cheap meals. SalvaBox is a web app where a student filters tonight's surplus food boxes by budget and diet and reserves one, getting a pickup code. Plus a 1-page strategy, a formula-based money model, a poster, a 1-page AI journal and a 5-slide pitch.
+
+TECH_STACK: Static HTML + CSS + vanilla JS in docs/ (GitHub Pages, no build, no backend); Python 3.11 stdlib + unittest for checks; stdlib zipfile for the .xlsx (no gh/node/pytest required)
+
+MODULES_AND_OWNERSHIP:
+  - T1 app | Owner: Session Agent | Allowed Files: docs/index.html, docs/style.css, docs/app.js, tests/test_app.py, journal/T1.md | Blocked-by: none | Summary: one page; fake list of >= 6 boxes (cafeteria, dish, diet, price RON, pickup window, boxes left); filter by max price + diet; Reserve button decrements boxes left and shows a pickup code; empty state; works at 360 px width; core rule in one pure JS function filterBoxes(boxes, maxPrice, diet).
+  - T2 strategy+money | Owner: Session Agent | Allowed Files: business/strategy.md, tools/build_model.py, business/financial_model.xlsx, tests/test_model.py, journal/T2.md | Blocked-by: none | Summary: 1-page strategy with problem, audience, solution, customer acquisition, 3 next steps; stdlib .xlsx money model (assumptions, costs, revenue, result) with formulas, 1 scenario, units in RON/luna.
+  - T3 promotion | Owner: Session Agent | Allowed Files: business/poster.html, tests/test_poster.py, journal/T3.md | Blocked-by: none | Summary: one poster (A4 portrait HTML with inline SVG image): message, image, call to action "Incearca acum!" and the live URL.
+  - T4 journal+pitch | Owner: Session Agent | Allowed Files: business/ai_journal.md, business/pitch.html, tests/test_submission.py, README.md | Blocked-by: T1, T2, T3 | Summary: 1-page AI journal compiled from journal/T*.md (tools, 3 best prompts, >= 1 corrected AI mistake, outside resources incl. this skill); 5-slide HTML pitch with live link + how to test the main function; README with live URL and how to test.
+
+VERIFICATION_COMMAND: python -m unittest discover -s tests -v
+
+DONE_CRITERIA:
+  1. Live GitHub Pages URL https://clarnuomandarina.github.io/salvabox-challenge-test/ loads, and filtering max 15 RON + vegetarian then reserving a box shows a pickup code and decrements boxes left (Coordinator live smoke test quoted in [COORD:REVIEW]).
+  2. python -m unittest discover -s tests -v exits 0 on clean main; xlsx result cells are formulas that recompute to the numbers quoted in strategy and pitch; contest limits hold (strategy and journal <= 1 page, pitch <= 5 slides).
+  3. All 6 deliverables are on main via Coordinator-reviewed PRs and tagged `submission`; README lists the live URL and how to test.
+
+HUMAN_OPERATOR_MODE: GH_CLI
+
+
+[SECTION 2: OPTIONAL FIELDS]
+
+BASE_BRANCH: main
+
+AGENT_ROSTER: 1 Main Coordinator, 3 Session Agents (one per parallel task), up to 3 Subagents
+
+STALE_CLAIM_TTL_MINUTES: 10
+
+REVIEW_MAX_ROUNDS: 2
+
+CONSTRAINTS: Disjoint file ownership per Issue; no direct commits to main after the scaffold; never force-push main; only the Coordinator merges; fake data only; no real personal data or secrets in prompts or files; no CDN/npm; claim only features that work on the live URL
+
+ESCALATION_POLICY: [COORD:RULING] for spec ambiguity; status:needs-human after REVIEW_MAX_ROUNDS, missing auth, or destructive action
