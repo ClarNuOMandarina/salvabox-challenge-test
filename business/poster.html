@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>SalvaBox - Afis promotional</title>
+<style>
+  @page { size: A4 portrait; margin: 0 }
+  * { margin: 0; padding: 0; box-sizing: border-box }
+  html, body { width: 210mm; height: 297mm }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: #0f2e1d;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+  }
+  .poster {
+    width: 210mm;
+    height: 297mm;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 70% at 50% 0%, #eafaf0 0%, #ffffff 55%),
+      linear-gradient(180deg, #ffffff 0%, #f3fbf6 100%);
+  }
+  .brandbar {
+    display: flex;
+    align-items: center;
+    gap: 10mm;
+    padding: 14mm 18mm 4mm;
+  }
+  .brandmark { width: 22mm; height: 22mm; flex: 0 0 auto }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.05 }
+  .brand-name { font-size: 30pt; font-weight: 800; letter-spacing: -0.5pt; color: #0f2e1d }
+  .brand-name .accent { color: #17a35a }
+  .brand-tag { font-size: 11pt; font-weight: 600; color: #3f6b53; margin-top: 1mm }
+
+  .headline {
+    padding: 6mm 18mm 0;
+    font-size: 40pt;
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.6pt;
+    color: #0f2e1d;
+  }
+  .headline .hl-accent { color: #17a35a }
+  .subline {
+    padding: 6mm 18mm 0;
+    font-size: 15.5pt;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #37543f;
+    max-width: 175mm;
+  }
+  .subline strong { color: #0f2e1d; font-weight: 700 }
+
+  .art { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; padding: 4mm 14mm }
+  .art svg { width: 100%; height: 100%; max-height: 120mm }
+
+  .pricetag {
+    position: absolute;
+    top: 150mm;
+    right: 16mm;
+    background: #17a35a;
+    color: #fff;
+    border-radius: 999px;
+    padding: 5mm 7mm;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(23,163,90,.35);
+    transform: rotate(6deg);
+  }
+  .pricetag .p-small { font-size: 10pt; font-weight: 600; opacity: .9; display: block }
+  .pricetag .p-big { font-size: 24pt; font-weight: 800; line-height: 1 }
+
+  .cta-wrap { padding: 2mm 18mm 0; text-align: center }
+  .cta {
+    display: inline-block;
+    background: linear-gradient(180deg, #1fbf69 0%, #149a52 100%);
+    color: #ffffff;
+    font-size: 22pt;
+    font-weight: 800;
+    letter-spacing: .3pt;
+    padding: 6mm 16mm;
+    border-radius: 999px;
+    box-shadow: 0 8px 22px rgba(20,154,82,.4);
+  }
+
+  .footer {
+    margin-top: auto;
+    background: #0f2e1d;
+    color: #eafaf0;
+    padding: 7mm 18mm 9mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2mm;
+  }
+  .footer .pickup { font-size: 12.5pt; font-weight: 500; color: #bfe8cf }
+  .footer .url { font-size: 15pt; font-weight: 700 }
+  .footer .url a { color: #6fe3a0; text-decoration: none }
+</style>
+</head>
+<body>
+  <main class="poster">
+    <div class="brandbar">
+      <!-- Brandmark: leaf growing from a box -->
+      <svg class="brandmark" viewBox="0 0 100 100" role="img" aria-label="Sigla SalvaBox: o frunza dintr-o cutie">
+        <rect x="14" y="46" width="72" height="42" rx="6" fill="#17a35a"/>
+        <rect x="14" y="46" width="72" height="12" rx="6" fill="#0f8c4a"/>
+        <path d="M50 58 C50 40 62 28 80 24 C78 42 68 56 50 58 Z" fill="#8fe6b2"/>
+        <path d="M50 58 C50 44 44 34 32 30 C33 44 40 54 50 58 Z" fill="#b6f2cf"/>
+        <path d="M50 58 L50 40" stroke="#0f8c4a" stroke-width="2.4" fill="none"/>
+      </svg>
+      <div class="brand-text">
+        <span class="brand-name">Salva<span class="accent">Box</span></span>
+        <span class="brand-tag">Mancare buna salvata, campus mai verde</span>
+      </div>
+    </div>
+
+    <h1 class="headline">Cina de azi, <span class="hl-accent">de la 8 lei</span>. Zero risipa.</h1>
+
+    <p class="subline">Pentru <strong>studentii din campus</strong>: rezerva o cutie surpriza din surplusul cantinei in seara asta si ridic-o cu un cod de ridicare. Economisesti bani, cantina nu mai arunca mancarea.</p>
+
+    <div class="art">
+      <!-- Illustration: food box + leaf + campus skyline -->
+      <svg viewBox="0 0 600 420" role="img" aria-label="Ilustratie: o cutie de mancare cu o frunza, in fata cladirilor campusului">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#eafaf0"/>
+            <stop offset="1" stop-color="#d6f3e2"/>
+          </linearGradient>
+          <linearGradient id="boxg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#c98a4b"/>
+            <stop offset="1" stop-color="#a86a30"/>
+          </linearGradient>
+          <linearGradient id="lidg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#e0a765"/>
+            <stop offset="1" stop-color="#c98a4b"/>
+          </linearGradient>
+          <linearGradient id="leafg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#8fe6b2"/>
+            <stop offset="1" stop-color="#17a35a"/>
+          </linearGradient>
+        </defs>
+
+        <!-- sky -->
+        <rect x="0" y="0" width="600" height="420" fill="url(#sky)"/>
+        <circle cx="500" cy="70" r="34" fill="#ffe08a" opacity="0.8"/>
+
+        <!-- campus skyline -->
+        <g opacity="0.9">
+          <rect x="40" y="150" width="90" height="150" rx="4" fill="#9fcdb4"/>
+          <rect x="150" y="110" width="110" height="190" rx="4" fill="#7bbd98"/>
+          <rect x="350" y="130" width="100" height="170" rx="4" fill="#7bbd98"/>
+          <rect x="470" y="165" width="90" height="135" rx="4" fill="#9fcdb4"/>
+          <!-- clock-tower windows -->
+          <g fill="#eafaf0">
+            <rect x="170" y="130" width="18" height="22" rx="2"/>
+            <rect x="200" y="130" width="18" height="22" rx="2"/>
+            <rect x="230" y="130" width="18" height="22" rx="2"/>
+            <rect x="170" y="166" width="18" height="22" rx="2"/>
+            <rect x="200" y="166" width="18" height="22" rx="2"/>
+            <rect x="230" y="166" width="18" height="22" rx="2"/>
+            <rect x="370" y="150" width="16" height="20" rx="2"/>
+            <rect x="398" y="150" width="16" height="20" rx="2"/>
+            <rect x="426" y="150" width="16" height="20" rx="2"/>
+            <rect x="60" y="170" width="16" height="20" rx="2"/>
+            <rect x="90" y="170" width="16" height="20" rx="2"/>
+            <rect x="490" y="185" width="16" height="20" rx="2"/>
+            <rect x="520" y="185" width="16" height="20" rx="2"/>
+          </g>
+        </g>
+
+        <!-- ground -->
+        <rect x="0" y="300" width="600" height="120" fill="#cde7d8"/>
+
+        <!-- food box -->
+        <g transform="translate(205 196)">
+          <!-- shadow -->
+          <ellipse cx="95" cy="196" rx="120" ry="16" fill="#0f2e1d" opacity="0.12"/>
+          <!-- box body -->
+          <rect x="10" y="70" width="170" height="115" rx="10" fill="url(#boxg)"/>
+          <!-- open lid back -->
+          <path d="M10 72 L95 40 L180 72 L95 98 Z" fill="#b57a3c"/>
+          <!-- open lid front flap -->
+          <path d="M8 70 L95 42 L95 70 Z" fill="url(#lidg)"/>
+          <path d="M182 70 L95 42 L95 70 Z" fill="#d79a5a"/>
+          <!-- box front band -->
+          <rect x="10" y="118" width="170" height="30" fill="#0f2e1d" opacity="0.08"/>
+          <!-- food peeking out: bread + veg -->
+          <ellipse cx="70" cy="60" rx="26" ry="18" fill="#e9c27a"/>
+          <ellipse cx="108" cy="54" rx="22" ry="16" fill="#f0d08c"/>
+          <circle cx="132" cy="66" r="13" fill="#e2584b"/>
+          <circle cx="54" cy="70" r="11" fill="#f08a3c"/>
+          <!-- little steam lines -->
+          <g stroke="#9fcdb4" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.8">
+            <path d="M85 30 q8 -10 0 -20"/>
+            <path d="M110 28 q8 -10 0 -20"/>
+          </g>
+        </g>
+
+        <!-- big leaf -->
+        <g transform="translate(360 150)">
+          <path d="M0 120 C10 50 70 0 150 -8 C150 80 90 128 20 128 Z" fill="url(#leafg)"/>
+          <path d="M18 122 C50 90 100 50 142 0" stroke="#0f8c4a" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M70 92 L60 70 M100 62 L95 40 M48 108 L40 90" stroke="#0f8c4a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="pricetag">
+      <span class="p-small">de la</span>
+      <span class="p-big">8 lei</span>
+    </div>
+
+    <div class="cta-wrap">
+      <span class="cta">Incearca acum!</span>
+    </div>
+
+    <footer class="footer">
+      <span class="pickup">Rezervi in 3 pasi -&gt; primesti un cod de ridicare -&gt; iei cutia de la cantina.</span>
+      <span class="url">salvabox pe web: <a href="https://clarnuomandarina.github.io/salvabox-challenge-test/">https://clarnuomandarina.github.io/salvabox-challenge-test/</a></span>
+    </footer>
+  </main>
+</body>
+</html>
