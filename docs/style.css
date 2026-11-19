@@ -26,7 +26,7 @@ body {
 }
 
 .app-title { margin: 0; font-size: 1.8rem; }
-.tagline { margin: 6px 0 0; font-size: 1rem; opacity: 0.95; }
+.tagline { margin: 6px 0 0; font-size: 1rem; opacity: 0.95; overflow-wrap: anywhere; }
 
 .app-main {
   max-width: 640px;
@@ -45,7 +45,7 @@ body {
   padding: 16px;
 }
 
-.field { display: flex; flex-direction: column; flex: 1 1 140px; }
+.field { display: flex; flex-direction: column; flex: 1 1 140px; min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 .field label { font-weight: 600; margin-bottom: 4px; font-size: 0.9rem; }
 
 .field input,
@@ -55,6 +55,8 @@ body {
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #fff;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .btn {
@@ -117,7 +119,23 @@ body {
   padding: 16px;
 }
 
-@media (max-width: 400px) {
+.demo-reset {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 430px) {
   .filters { flex-direction: column; align-items: stretch; }
+  .field { width: 100%; max-width: 100%; min-width: 0; }
+  .field input,
+  .field select {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .btn { width: 100%; }
   .app-title { font-size: 1.5rem; }
 }

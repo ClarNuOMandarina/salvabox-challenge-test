@@ -178,5 +178,33 @@ class TestAppJs(unittest.TestCase):
         self.assertTrue(all(b["left"] > 0 for b in all_boxes))
 
 
+class TestMobilePolish(unittest.TestCase):
+    """Issue #10: 360 px overflow fixes + demo-reset note."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.html = read("index.html")
+        cls.css = read("style.css")
+
+    def test_demo_reset_note_present(self):
+        self.assertIn(
+            "Demo: rezervarile se reseteaza la reincarcarea paginii.",
+            self.html,
+            "missing demo-reset note in index.html",
+        )
+
+    def test_media_query_sets_fields_full_width(self):
+        # Find every @media (max-width ...) { ... } block and require that at
+        # least one sets a form field (.field / input / select) to width: 100%.
+        blocks = re.findall(r"@media\s*\(max-width[^{]*\{(.*?)\n\}", self.css, re.DOTALL)
+        self.assertTrue(blocks, "no @media (max-width ...) rule found in style.css")
+        joined = "\n".join(blocks)
+        self.assertRegex(
+            joined,
+            r"\.(?:field(?:\s+(?:input|select))?)[^{}]*\{[^{}]*width:\s*100%",
+            "no @media (max-width) rule sets form fields to width: 100%",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
